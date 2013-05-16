@@ -84,7 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="model\Adressbuch.cs" />
+    <Compile Include="model\Addressbook.cs" />
     <Compile Include="controller\Adresser.cs" />
     <Compile Include="view\AdresserForm.cs">
       <SubType>Form</SubType>
@@ -92,7 +92,7 @@
     <Compile Include="view\AdresserForm.Designer.cs">
       <DependentUpon>AdresserForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="model\Adresse.cs" />
+    <Compile Include="model\Address.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="view\AdresserForm.resx">

@@ -16,8 +16,8 @@ namespace Adresser
         # region Klassenvariablen
 
         private AdresserForm _view;
-        private Adressbuch _adrBuch;
-        private Adresse _adr;
+        private Addressbook _adrBuch;
+        private Address _adr;
 
         #endregion
 
@@ -25,8 +25,8 @@ namespace Adresser
 
         public Adresser() 
         {
-            _adrBuch = new Adressbuch();
-            _adr = new Adresse();
+            _adrBuch = new Addressbook();
+            _adr = new Address();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -34,8 +34,8 @@ namespace Adresser
             _view = new AdresserForm(_adrBuch, _adr);
 
             // delegate registrieren
-            _adrBuch.updateAdressbuchDatei += new Adressbuch.OnUpdateAdressbuchDateiDelegate(leseAdressbuchAusXMLDatei);
-            _adrBuch.updateSpeichern += new Adressbuch.OnUpdateSpeichernDelegate(schreibeAdressbuchXMLDatei);
+            _adrBuch.updateAdressbuchDatei += new Addressbook.OnUpdateAdressbuchDateiDelegate(ReadAdressbookXMLFile);
+            _adrBuch.updateSpeichern += new Addressbook.OnUpdateSpeichernDelegate(WriteAdressbookXMLFile);
 
 
             Application.Run(_view);
@@ -48,7 +48,7 @@ namespace Adresser
         /// <summary>
         /// Schreibe Adressbuch in XML Datei.
         /// </summary>
-        private void schreibeAdressbuchXMLDatei()
+        private void WriteAdressbookXMLFile()
         {
             if (!System.IO.File.Exists(_adrBuch.AdressenPfad))
                 throw new FileNotFoundException("Adressdatei nicht gefunden.");
@@ -61,7 +61,7 @@ namespace Adresser
         /// Liest eine XML Datei aus und speicher diese im Adressbuch als Liste.
         /// </summary>
         /// <param name="kontaktDatei">Absoluter Pfad mit Datei und Endung</param>
-        private void leseAdressbuchAusXMLDatei(string kontaktDatei)
+        private void ReadAdressbookXMLFile(string kontaktDatei)
         {
             if (!System.IO.File.Exists(kontaktDatei))
                 throw new FileNotFoundException("Adressdatei nicht gefunden.");
@@ -71,12 +71,12 @@ namespace Adresser
             var query = from kontakt in xdoc.Descendants("contact")
                         select kontakt;
 
-            IList<Adresse> tempKontakte = new List<Adresse>();
-            Adresse tempAdr;
+            IList<Address> tempKontakte = new List<Address>();
+            Address tempAdr;
 
             foreach (XElement element in query)
             {
-                tempAdr = new Adresse();
+                tempAdr = new Address();
                 try
                 {
                     tempAdr.Name = element.Attribute("name").Value;

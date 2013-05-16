@@ -17,12 +17,12 @@ namespace Adresser
 
         enum Anzeigemodus { Anzeigen, Bearbeiten }
 
-        private Adressbuch _adressBuch;
-        private Adresse _adresse;
+        private Addressbook _adressBuch;
+        private Address _adresse;
 
         private Anzeigemodus _aktuellerModus;
 
-        public AdresserForm(Adressbuch adressBuch, Adresse adresse)
+        public AdresserForm(Addressbook adressBuch, Address adresse)
         {
             _adressBuch = adressBuch;
             _adresse = adresse;
@@ -30,8 +30,8 @@ namespace Adresser
             InitializeComponent();
 
             // delegates registrieren
-            _adressBuch.updateKontakte += new Adressbuch.OnUpdateKontakteDelegate(ladeKontakte);
-            _adresse.updateAdressEigenschaft += new Adresse.OnUpdateAdressEigenschaft(ladeAdressdetails);
+            _adressBuch.updateKontakte += new Addressbook.OnUpdateKontakteDelegate(ladeKontakte);
+            _adresse.updateAdressEigenschaft += new Address.OnUpdateAdressEigenschaft(ladeAdressdetails);
         }
 
 
@@ -65,7 +65,7 @@ namespace Adresser
         /// Lädt eine Adresse in die aktuelle Anzeige
         /// </summary>
         /// <param name="adr">Adresssatz</param>
-        private void ladeAdressdetails(Adresse adr)
+        private void ladeAdressdetails(Address adr)
         {
             txtName.Text = adr.Name;
             txtStrasse.Text = adr.Strasse;
@@ -123,10 +123,10 @@ namespace Adresser
 
             try
             {
-                _adresse.Name = ((Adresse)lstAdressbuch.SelectedItem).Name;
-                _adresse.Strasse = ((Adresse)lstAdressbuch.SelectedItem).Strasse;
-                _adresse.Postleitzahl = ((Adresse)lstAdressbuch.SelectedItem).Postleitzahl;
-                _adresse.Ort = ((Adresse)lstAdressbuch.SelectedItem).Ort;
+                _adresse.Name = ((Address)lstAdressbuch.SelectedItem).Name;
+                _adresse.Strasse = ((Address)lstAdressbuch.SelectedItem).Strasse;
+                _adresse.Postleitzahl = ((Address)lstAdressbuch.SelectedItem).Postleitzahl;
+                _adresse.Ort = ((Address)lstAdressbuch.SelectedItem).Ort;
             }
             catch (NullReferenceException)
             {
@@ -150,7 +150,7 @@ namespace Adresser
             errorProvider.Clear();
 
             // Validierung PLZ
-            if (!_adresse.IsValidPostleitzahl(txtPostleitzahl.Text))
+            if (!_adresse.IsValidPostcode(txtPostleitzahl.Text))
             {
                 errorProvider.SetError(txtPostleitzahl, "Keine gültige Postleitzahl! PLZ besteht auf 5 Ziffern.");
                 error = true;
@@ -162,7 +162,7 @@ namespace Adresser
                 error = true;
             }
             // Validierung Ort
-            if(!_adresse.IsValidOrt(txtOrt.Text))
+            if(!_adresse.IsValidCity(txtOrt.Text))
             {
                 errorProvider.SetError(txtOrt, "Keine gültiger Ort! Dieser darf nicht leer sein.");
                 error = true;
@@ -263,7 +263,7 @@ namespace Adresser
         {
             try
             {
-                Adresse newAdr = new Adresse();
+                Address newAdr = new Address();
                 _adressBuch.Kontakte.Insert(0, newAdr);
 
                 ladeAdressdetails(newAdr);

@@ -6,12 +6,12 @@ using System.Text;
 namespace Adresser
 {
 
-    public class Adresse
+    public class Address
     {
 
         # region Delegates & Events
 
-        public delegate void OnUpdateAdressEigenschaft(Adresse adr);
+        public delegate void OnUpdateAdressEigenschaft(Address adr);
         public event OnUpdateAdressEigenschaft updateAdressEigenschaft;
 
         #endregion
@@ -36,7 +36,7 @@ namespace Adresser
             set
             {
                 _name = value;
-                notifyAdressEigenschaft();
+                NotifyAddressProperty();
             }
         }
         public string Strasse
@@ -45,7 +45,7 @@ namespace Adresser
             set
             {
                 _strasse = value;
-                notifyAdressEigenschaft();
+                NotifyAddressProperty();
             }
         }
         public string Postleitzahl
@@ -54,7 +54,7 @@ namespace Adresser
             set
             {
                 _postleitzahl = value;
-                notifyAdressEigenschaft();
+                NotifyAddressProperty();
             }
         }
         public string Ort
@@ -63,7 +63,7 @@ namespace Adresser
             set
             {
                 _ort = value;
-                notifyAdressEigenschaft();
+                NotifyAddressProperty();
             }
         }
 
@@ -77,7 +77,7 @@ namespace Adresser
         /// </summary>
         /// <param name="input"></param>
         /// <returns>Ob die Validierung erfolgreich war</returns>
-        public bool IsValidPostleitzahl(string input)
+        public bool IsValidPostcode(string input)
         {
             bool error = false;
             int plz = 0;
@@ -118,7 +118,7 @@ namespace Adresser
         /// </summary>
         /// <param name="input"></param>
         /// <returns>Ob die Validierung erfolgreich war</returns>
-        public bool IsValidOrt(string input)
+        public bool IsValidCity(string input)
         {
             if (input != String.Empty && input != null)
                 return true;
@@ -142,7 +142,7 @@ namespace Adresser
         /// <summary>
         /// Ruft den Delegate OnUpdateAdressEigenschaft auf.
         /// </summary>
-        public void notifyAdressEigenschaft()
+        public void NotifyAddressProperty()
         {
             if (this.updateAdressEigenschaft != null)
             {
@@ -155,12 +155,12 @@ namespace Adresser
 
         #region Konstruktor
 
-        public Adresse(string name)
+        public Address(string name)
         {
             this.Name = name;
         }
 
-        public Adresse()
+        public Address()
         {
             this.Name = String.Empty; // name darf nicht null sein
         }

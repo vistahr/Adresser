@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Adresser
 {
-    public class Adressbuch
+    public class Addressbook
     {
 
         #region Delegates und Events
@@ -28,7 +28,7 @@ namespace Adresser
 
         private bool _speichern = false;
         private string _adressenPfad;
-        private IList<Adresse> _kontakte;
+        private IList<Address> _kontakte;
 
         #endregion
 
@@ -52,7 +52,7 @@ namespace Adresser
 
         }
 
-        public IList<Adresse> Kontakte
+        public IList<Address> Kontakte
         {
             get { return _kontakte; }
             set
@@ -62,7 +62,7 @@ namespace Adresser
             }
         }
 
-        public IList<Adresse> this [string searchName]
+        public IList<Address> this [string searchName]
         {
             get 
             {
@@ -91,7 +91,7 @@ namespace Adresser
             XElement xroot = new XElement("adresser");
             xdoc.Add(xroot);
 
-            foreach (Adresse data in _kontakte)
+            foreach (Address data in _kontakte)
             {
                 if (data.Name == String.Empty)
                     continue;
